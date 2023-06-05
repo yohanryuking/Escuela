@@ -1,0 +1,65 @@
+{% extends './base.html' %}
+
+{% block title %}
+  Gestion de cursos
+{% endblock %}
+
+{% block body %}
+  <div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+      <h2>Gestionde Cursos</h2>
+      <div class="card">
+        <div class="card-body">
+          <form action="/registrar/" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+              <input type="text" name="txtCodigo" id="txtCodigo" class="form-control" placeholder="Codigo" minlength="6" maxlength="6" required />
+            </div>
+            <div class="form-group">
+              <input type="text" name="txtNombre" id="txtNombre" class="form-control" placeholder="Nombre" maxlength="30" required />
+            </div>
+            <div class="form-group">
+              <input type="text" name="numCreditos" id="txtCreditos" class="form-control" min="1" max="9" value="1" required />
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+      <div class="table-responsive">
+        <h1>Listado de Cursos</h1>
+        <table class="table table-striped py-4">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>codigo</th>
+              <th>nombre</th>
+              <th>creditos</th>
+              <th colspan="2">opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for c in cursos %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{ c.codigo }}</td>
+                <td>{{ c.nombre }}</td>
+                <td>{{ c.creditos }}</td>
+                <td>
+                  <a href="edicion/{{ c.codigo }}" class="btn btn-info">editar</a>
+                </td>
+                <td>
+                  <a href="eliminacion/{{ c.codigo }}" class="btn btn-danger">eliminar</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
